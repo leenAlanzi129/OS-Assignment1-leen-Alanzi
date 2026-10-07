@@ -47,7 +47,7 @@ class Process implements Runnable {
         int runTime = Math.min(timeQuantum, remainingTime); // Run for the smaller of the two times
         
         // Show quantum execution starting
-        String quantumBar = (0, 15);
+        String quantumBar = createProgressBar (0, 15);
         System.out.println(Colors.BRIGHT_GREEN + "  ▶ " + Colors.BOLD + Colors.CYAN + name + 
                           Colors.RESET + Colors.GREEN + " executing quantum" + Colors.RESET + 
                           " [" + runTime + "ms] ");
@@ -60,7 +60,7 @@ class Process implements Runnable {
             for (int i = 1; i <= steps; i++) {
                 Thread.sleep(stepTime);
                 int quantumProgress = (i * 100) / steps;
-                quantumBar = (quantumProgress, 15);
+                quantumBar = createProgressBar(quantumProgress, 15);
                 
                 // Clear line and show updated progress
                 System.out.print("\r  " + Colors.YELLOW + "⚡" + Colors.RESET + 
@@ -74,7 +74,7 @@ class Process implements Runnable {
         
         remainingTime -= runTime; // Deduct the run time from the remaining time
         int overallProgress = (int) (((double)(burstTime - remainingTime) / burstTime) * 100);
-        String overallProgressBar = (overallProgress, 20);
+        String overallProgressBar =createProgressBar(overallProgress, 20);
         
         System.out.println(Colors.YELLOW + "  ⏸ " + Colors.CYAN + name + Colors.RESET + 
                           " completed quantum " + Colors.BRIGHT_YELLOW + runTime + "ms" + Colors.RESET + 
@@ -95,12 +95,12 @@ class Process implements Runnable {
     }
     
     // Helper method to create a visual progress bar
-    private String (int progress, int width) {
+    private String createProgressBar(int progress, int width) {
         int filled = (progress * width) / 100;
         StringBuilder bar = new StringBuilder("[");
         for (int i = 0; i < width; i++) {
-            if (i < filled) {
-                bar.append(Colors.GREEN + "#" + Colors.RESET);
+             if (i < filled) {
+                bar.append(Colors.GREEN + "█" + Colors.RESET);
             } else {
                 bar.append(Colors.WHITE + "░" + Colors.RESET);
             }
@@ -130,6 +130,10 @@ class Process implements Runnable {
     public String getName() {
         return name;
     }
+   public int getPriority(){
+    return priority;
+
+   }
 
     public int getBurstTime() {
         return burstTime;
@@ -295,7 +299,7 @@ public class SchedulerSimulation {
         // Print a message indicating the process has entered the ready queue
         System.out.println(Colors.BLUE + "  ➕ " + Colors.BOLD + Colors.CYAN + process.getName() + 
                           Colors.RESET + Colors.BLUE + " added to ready queue" + Colors.RESET + 
-                          " │ Burst time: " + Colors.YELLOW + process.getBurstTime() + "ms" + 
+                          " │ Burst time: " + Colors.YELLOW + process.getBurstTime() + "ms" + "|Priority:" + process.getPriority()+
                           Colors.RESET);
     
                         }
