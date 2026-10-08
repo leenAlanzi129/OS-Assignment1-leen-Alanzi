@@ -1,8 +1,10 @@
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
+import java.util.Set;
 
 // ANSI Color Codes for enhanced terminal output
 class Colors {
@@ -30,6 +32,9 @@ class Process implements Runnable {
     private int timeQuantum; // Time slice (time quantum) allowed per CPU access (in milliseconds)
     private int remainingTime; // Time left for the process to finish its execution
     private int priority;
+     long waitingTime=0;
+     long queueEntryTime;
+
 
     // Constructor to initialize the process with name, burst time, and time quantum
     public Process(String name, int burstTime, int timeQuantum) {
@@ -138,7 +143,9 @@ class Process implements Runnable {
     public int getBurstTime() {
         return burstTime;
     }
-
+    public long getWaitingTime(){
+        return waitingTime;
+    }
     public int getRemainingTime() {
         return remainingTime;
     }
@@ -150,6 +157,8 @@ class Process implements Runnable {
 }
 
 public class SchedulerSimulation {
+    private static int contextSwitchCount=0;
+    
     public static void main(String[] args) {
         // ⚠️ IMPORTANT: Put your student ID here to seed the random number generator
         // This makes your output unique to you - DO NOT forget to change this!
@@ -225,7 +234,7 @@ public class SchedulerSimulation {
         while (!processQueue.isEmpty()) {
             // Get the next thread from the queue (FIFO)
             Thread currentThread = processQueue.poll(); // Dequeues the next thread
-            
+            Process currentProcess= processMap.get(currentThread);
             // Print the current process queue (list of process IDs in the queue)
             System.out.println(Colors.BOLD + Colors.MAGENTA + "┌─ Ready Queue " + "─".repeat(65) + Colors.RESET);
             System.out.print(Colors.MAGENTA + "│ " + Colors.RESET + Colors.BRIGHT_WHITE + "[" + Colors.RESET);
@@ -243,6 +252,8 @@ public class SchedulerSimulation {
             System.out.println(Colors.BOLD + Colors.MAGENTA + "└" + "─".repeat(79) + Colors.RESET + "\n");
             
             // Start the thread, which will run the process for one time quantum
+           currentProcess.waitingTime+=System.currentTimeMillis()-currentProcess.queueEntryTime;
+            contextSwitchCount++;
             currentThread.start();
             
             try {
@@ -279,6 +290,16 @@ public class SchedulerSimulation {
                           Colors.BG_GREEN + Colors.WHITE + Colors.BOLD + 
                           "                     ✓  ALL PROCESSES COMPLETED  ✓                            " + 
                           Colors.RESET + Colors.BOLD + Colors.BRIGHT_GREEN + "║" + Colors.RESET);
+        System.out.println("total context switches:"+contextSwitchCount);
+        System.out.println("\nProcess Name\tBurst Time\tWaiting Time\tTurnarouna Time");
+       Set<Process> uniqueProcess = new LinkedHashSet<>(processMap.values());
+        for(Process process: uniqueProcess ){
+         long turnaroundTime =process.getWaitingTime()+process.getBurstTime();
+        System.out.println(process.getName()+"\t"+process.getBurstTime()+"\t"+process.getWaitingTime()+"\t"+turnaroundTime);
+        }
+
+
+        
         System.out.println(Colors.BOLD + Colors.BRIGHT_GREEN + 
                           "╚════════════════════════════════════════════════════════════════════════════════╝" + 
                           Colors.RESET + "\n");
@@ -289,7 +310,7 @@ public class SchedulerSimulation {
                                         Map<Thread, Process> processMap) {
         // Create a new thread to run the process
         Thread thread = new Thread(process);
-        
+        process.queueEntryTime=System.currentTimeMillis();
         // Add the thread to the ready queue
         processQueue.add(thread);
         
