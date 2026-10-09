@@ -128,7 +128,7 @@
 
 ## Your Development Log
 
-### Entry 1 - [October 8,2026, 7:45 PM]
+### Entry 1 - [October 6,2026, 7:45 PM]
 **What I did** : Updated my student ID in SchedlerSimulation.java.
 
 **Details** : I changed the student ID in the code so the simulation uses my ID to generate random valus.
@@ -137,11 +137,11 @@
 
 **Solution**: I found the studentID variable and replaced its value with my ID.
 
-**Time spent**:October 6, 10:00 PM
+**Time spent**:20 minutes
 
 ---
 
-### Entry 2 - [Date and Time]
+### Entry 2 - [October 6,2026, 10:00 PM]
 **What I did**:Added process priority to the simulation.
 
 **Details**:I added a random priority from 1 to 10 for each process and displayed it when the process enters the ready queue.
@@ -150,11 +150,11 @@
 
 **Solution**:I fixed the code errors and ran the program to check that the priorities appeared correctly.
 
-**Time spent**:October 6,10:10 PM
+**Time spent**:45 minutes
 
 ---
 
-### Entry 3 - [Date and Time]
+### Entry 3 - [October 7,2026 ,11:00 PM]
 **What I did**:Added a context switch counter to the simulation.
 
 **Details**:I created a static counter and increased it each time a process started running.I also displayed the total number of context switches at the end of the simulation,
@@ -163,11 +163,11 @@
 
 **Solution**: I added the counter before currentThread.start() and tested the program to make sure the total appeared correctly.
 
-**Time spent**: October 7,11:00 PM
+**Time spent**: 1 hour
 
 ---
 
-### Entry 4 - [Date and Time]
+### Entry 4 - [October 8,2026,9:00 PM]
 **What I did**:aedded waiting time tracking to the simulatoin.
 
 **Details**:I used system.currentTimeMillis() to calculate how long each process waited in the ready queue.I also calculated the turaraound time by adding the waiting time and burst time.
@@ -176,11 +176,11 @@
 
 **Solution**:I fixed the errors and added a final table showing the process name,burst,time,waiting time,and turnaraound time.
 
-**Time spent**:October 8,9:00 PM
+**Time spent**:1 hour
 
 ---
 
-### Entry 5 - [Date and Time]
+### Entry 5 - [October 8,2026,10:00 PM]
 **What I did**:Tested the simulation and checked the final results.
 
 **Details**:I ran the java program to make sure the process priority, context switch counter,waiting times,and turnaround times were displayed correctly.
@@ -189,11 +189,11 @@
 
 **Solution**:I uesd LinkedHashSet to remove duplicate process form the final table.I fixed the errors and ran the program again to check the results.
 
-**Time spent**:October 8,10:00 PM
+**Time spent**:1 hour
 
 ---
 
-### Entry 6 - [Optional - Date and Time]
+### Entry 6 - [Octobe 8,2026 11:00 PM]
 **What I did**:Committed and pushed my code changes to GitHub.
 
 **Details**:I created separeta commits for process priority,context switch counter ,and waiting time tracking.then i pushed the changes to my GitHub repository.
@@ -202,7 +202,7 @@
 
 **Solution**: I uesd Source Control to stage an commit my change,the signed in to GitHub and synced my repository.
 
-**Time spent**:Octobe 8,11:00 PM
+**Time spent**:1 hour
 
 ---
 
